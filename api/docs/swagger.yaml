@@ -1,0 +1,204 @@
+definitions:
+  models.CreateStudentRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      user_name:
+        type: string
+    type: object
+  models.GetStudentResult:
+    properties:
+      count:
+        type: integer
+      student:
+        items:
+          $ref: '#/definitions/models.Student'
+        type: array
+    type: object
+  models.ResponseError:
+    properties:
+      message:
+        type: string
+    type: object
+  models.ResponseOK:
+    properties:
+      message:
+        type: string
+    type: object
+  models.Student:
+    properties:
+      created_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      phone_number:
+        type: string
+      user_name:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact: {}
+  description: This is a student project api.
+  title: Swagger for Student project api
+  version: "1.0"
+paths:
+  /students:
+    get:
+      consumes:
+      - application/json
+      description: Get Students
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: Page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: FirstName
+        in: query
+        name: firstname
+        type: string
+      - description: LastName
+        in: query
+        name: lastname
+        type: string
+      - description: UserName
+        in: query
+        name: username
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.GetStudentResult'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+      summary: Get Students
+      tags:
+      - Student
+    post:
+      consumes:
+      - application/json
+      description: Create a student
+      parameters:
+      - description: Student
+        in: body
+        name: blog
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateStudentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Student'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+      summary: Create a student
+      tags:
+      - Student
+  /students/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Student
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ResponseOK'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+      summary: Delete a Student
+      tags:
+      - Student
+    get:
+      consumes:
+      - application/json
+      description: Get student by id
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Student'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+      summary: Get Student by id
+      tags:
+      - Student
+    put:
+      consumes:
+      - application/json
+      description: Update a blog
+      parameters:
+      - description: ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Student
+        in: body
+        name: blog
+        required: true
+        schema:
+          $ref: '#/definitions/models.CreateStudentRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Student'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ResponseError'
+      summary: Update a blog
+      tags:
+      - Student
+swagger: "2.0"
